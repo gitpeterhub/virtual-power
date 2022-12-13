@@ -6,47 +6,38 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pkumal.virtualpower.modal.Battery;
 import com.pkumal.virtualpower.repository.BatteryRepository;
 import com.pkumal.virtualpower.request.BatteryRequest;
 import com.pkumal.virtualpower.response.BatteryResponse;
+import com.pkumal.virtualpower.utilities.Utilities;
 
 @Service
-public class BatteryService {
+public class VirtualPowerService {
 
 	@Autowired
 	private BatteryRepository batteryRepository;
 
-	public void processBatteries(List<BatteryRequest> batteryRequests) {
+	public List<Battery> processBatteries(List<BatteryRequest> batteryRequests) {
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		/**
-		 * 
-		 * Make json key case insensitive for mapping to target class eg: json key is
-		 * not in camel case but target class has camel case field
-		 * 
-		 */
-		objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		List<Battery> batteries = batteryRequests.stream()
-				.map(batteryRequest -> objectMapper.convertValue(batteryRequest, Battery.class))
+				.map(batteryRequest -> Utilities.parseObject(batteryRequest, Battery.class))
 				.collect(Collectors.toList());
 
-		batteryRepository.saveAll(batteries);
+		Iterable<Battery> batteriesSaved = batteryRepository.saveAll(batteries);
+
+		return (List<Battery>) batteriesSaved;
 
 	};
 
-	public BatteryResponse findByPostcodes(String postCodeRange) {
+	public BatteryResponse findByPostCodes(String postCodeRange) {
 
 		// step 1 : get batteries within rage.
 		String postCodeRange1 = postCodeRange.split("-")[0];
 		String postCodeRange2 = postCodeRange.split("-")[1];
-		
+
 		List<Battery> batteries = batteryRepository.findByPostCodes(postCodeRange1, postCodeRange2);
-		
+
 		if (batteries.isEmpty()) {
 			return new BatteryResponse();
 		}

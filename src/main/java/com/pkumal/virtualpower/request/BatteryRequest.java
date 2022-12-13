@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 public class BatteryRequest {
 
 	private String name;
-	private String postCode;
+	private int postCode;
 	private int capacity;
 
 	public BatteryRequest() {
 		
 	}
 	
-	public BatteryRequest(String name, String postCode, int capacity) {
+	public BatteryRequest(String name, int postCode, int capacity) {
 		this.name = name;
 		this.postCode = postCode;
 		this.capacity = capacity;
@@ -28,7 +28,7 @@ public class BatteryRequest {
 		this.name = name;
 	}
 
-	public String getPostCode() {
+	public int getPostCode() {
 		return postCode;
 	}
 
@@ -39,7 +39,7 @@ public class BatteryRequest {
 	 * 
 	 */
 	@JsonSetter("postcode")
-	public void setPostCode(String postCode) {
+	public void setPostCode(int postCode) {
 		this.postCode = postCode;
 	}
 
