@@ -90,7 +90,7 @@ public class VirtualPowerServiceTest {
 	}
 
 	@Test
-	void testGetBatteriesForPostCodeRange() {
+	void testGetBatteriesForPostCodes() {
 
 		Mockito.when(batteryRepository.findByPostCodes("6000", "10000")).thenReturn(postCodeBatteriesResponse);
 		BatteryResponse batteryResponse = virtualPowerService.findByPostCodes("6000", "10000");

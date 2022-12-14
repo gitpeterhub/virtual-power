@@ -79,7 +79,7 @@ public class VirtualPowerApiControllerTest {
 	}
 
 	@Test
-	void testGetListOfBatteriesForPostcodeRange() throws JsonProcessingException, Exception {
+	void testGetListOfBatteriesForPostCodes() throws JsonProcessingException, Exception {
 
 		mockMvc.perform(post("/virtualpower/api/v1/addBatteries").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(batteryRequests))).andExpect(status().isOk());

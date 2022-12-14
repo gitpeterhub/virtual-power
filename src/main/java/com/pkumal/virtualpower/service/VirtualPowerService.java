@@ -30,10 +30,10 @@ public class VirtualPowerService {
 
 	};
 
-	public BatteryResponse findByPostCodes(String postCodeRange1, String postCodeRange2) {
+	public BatteryResponse findByPostCodes(String postCodeFrom, String postCodeTo) {
 
 		// step 1 : get batteries within rage.
-		List<Battery> batteries = batteryRepository.findByPostCodes(postCodeRange1, postCodeRange2);
+		List<Battery> batteries = batteryRepository.findByPostCodes(postCodeFrom, postCodeTo);
 
 		if (batteries.isEmpty()) {
 			return new BatteryResponse();
