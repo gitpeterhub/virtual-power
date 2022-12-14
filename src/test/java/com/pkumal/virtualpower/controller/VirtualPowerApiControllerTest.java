@@ -107,7 +107,7 @@ public class VirtualPowerApiControllerTest {
 
 		BatteryResponse batteryResponse = objectMapper.readValue(result.getResponse().getContentAsString(),
 				BatteryResponse.class);
-		System.out.println("batteryResponse " + batteryResponse.getBatteryNames());
+
 		List<String> batteryNamesSorted = batteryResponse.getBatteryNames().stream().sorted().toList();
 
 		assertAll(() -> assertTrue(batteryResponse.getAverageWatts() > 0),
