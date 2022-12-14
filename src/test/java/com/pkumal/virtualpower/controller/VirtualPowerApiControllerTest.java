@@ -42,7 +42,7 @@ public class VirtualPowerApiControllerTest {
 	VirtualPowerService virtualPowerService;
 
 	List<BatteryRequest> batteryRequests;
-	
+
 	@Autowired
 	ObjectMapper objectMapper;
 
@@ -85,7 +85,7 @@ public class VirtualPowerApiControllerTest {
 				.content(objectMapper.writeValueAsString(batteryRequests))).andExpect(status().isOk());
 
 		MvcResult result = mockMvc
-				.perform(get("/virtualpower/api/v1/getBatteries/6000-10000").accept(MediaType.APPLICATION_JSON))
+				.perform(get("/virtualpower/api/v1/getBatteriesByPostCodes?from=6000&to=10000").accept(MediaType.APPLICATION_JSON))
 				.andReturn();
 
 		BatteryResponse batteryResponse = objectMapper.readValue(result.getResponse().getContentAsString(),
@@ -102,9 +102,8 @@ public class VirtualPowerApiControllerTest {
 		mockMvc.perform(post("/virtualpower/api/v1/addBatteries").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(batteryRequests))).andExpect(status().isOk());
 
-		MvcResult result = mockMvc
-				.perform(get("/virtualpower/api/v1/getBatteries/6000-10000").accept(MediaType.APPLICATION_JSON))
-				.andReturn();
+		MvcResult result = mockMvc.perform(get("/virtualpower/api/v1/getBatteriesByPostCodes")
+				.queryParam("from", "6000").queryParam("to", "10000").accept(MediaType.APPLICATION_JSON)).andReturn();
 
 		BatteryResponse batteryResponse = objectMapper.readValue(result.getResponse().getContentAsString(),
 				BatteryResponse.class);

@@ -1,4 +1,4 @@
-## Virtual power system
+# Virtual power system
 The project allows you to add the battery information and list out the batteries according to the postcode
 
 + Technologies used
@@ -12,7 +12,7 @@ You can run the application on you local machine by executing com.pkumal.virtual
 You can also run the application with command mvnw srping-boot:run
 from the project root folder from command line
 
-Once you run the project the api is available at url "http://localhost:8080". 
+Once you run the project the api is available at url "http://localhost:8080/virtualpower/api/v1". 
 
 ## Working with API
 
@@ -20,19 +20,44 @@ You can do it via browser or postman client.
 Supported functionalities :
 
 + Add List of Batteries - POST request
-The api allows to save batteries. It takes list of batteries in body. 
-Put the coontentType in application/json while sending request
+	+ The api allows to save batteries. It takes list of batteries in JSON body.
 
-Sample  - http://localhost:8080/virtualpower/api/v1/addBatteries
+Request url : "http://localhost:8080/virtualpower/api/v1/addBatteries"
+
 Sample request Body:
 
-[ { "name":"batteryName", "postCode":"postcode", "wattCapacity":wattCapacity }]
+```
+[
+    {
+        "name": "batteryName1",
+        "postCode": "postcode1",
+        "wattCapacity":wattCapacity1
+    },
+       {
+        "name": "batteryName2",
+        "postCode": "postcode2",
+        "wattCapacity":wattCapacit2
+    }
+]
 
-+ Get List of Batteries for given Post Code Range - GET Request
-Sample - http://localhost:8080/virtualpower/api/v1/getBatteries/6000-10000
+```
++ Get List of Batteries for given Post Code Range - GET Request.
+	+ The api takes two postcodes and returns the list of batteries falling within those postcodes.
 
-The api takes list postcode and returns the list of batteries associated with the postcodes.
+Request url : "http://localhost:8080/virtualpower/api/v1/getBatteriesByPostCodes?from={postCodeFrom}&to={postCodeTo}".
 
 Sample Response Body:
 
-{ "batteryNames":["batteryName1","BatteryName2",..], "totalWatts":1000, "averageWatts":345.784747 }
+```
+{
+    "batteryNames": [
+        "batteryName1",
+        "BatteryName2",
+        ...
+    ],
+    "totalWatts": 1000,
+    "averageWatts": 345.784747
+}
+```
+
+######NOTE : Keep the request content type in application/json.

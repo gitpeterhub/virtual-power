@@ -68,7 +68,7 @@ public class VirtualPowerServiceTest {
 				new BatteryRequest("Bently", 6102, 85000), new BatteryRequest("Northgate Mc", 9464, 13500),
 				new BatteryRequest("Gold Coast Mc", 9729, 50000));
 
-		postCodeBatteriesResponse =  postCodeBatteryRequests.stream()
+		postCodeBatteriesResponse = postCodeBatteryRequests.stream()
 				.map(batteryRequest -> Utilities.parseObject(batteryRequest, Battery.class))
 				.collect(Collectors.toList());
 
@@ -93,7 +93,7 @@ public class VirtualPowerServiceTest {
 	void testGetBatteriesForPostCodeRange() {
 
 		Mockito.when(batteryRepository.findByPostCodes("6000", "10000")).thenReturn(postCodeBatteriesResponse);
-		BatteryResponse batteryResponse = virtualPowerService.findByPostCodes("6000-10000");
+		BatteryResponse batteryResponse = virtualPowerService.findByPostCodes("6000", "10000");
 		assertEquals(12, batteryResponse.getBatteryNames().size());
 		assertTrue(batteryResponse.getAverageWatts() > 0);
 		assertTrue(batteryResponse.getTotalWatts() > 0);
